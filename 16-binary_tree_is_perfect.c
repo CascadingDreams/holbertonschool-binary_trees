@@ -1,25 +1,27 @@
 #include "binary_trees.h"
 
 /**
- * binary_tree_depth_simple - measures the depth of a node
+ * binary_tree_depth - measures the depth of a node
  * @tree: pointer to the node to measure the depth
  *
  * Return: depth
  */
-size_t binary_tree_depth_simple(const binary_tree_t *tree)
+size_t binary_tree_depth(const binary_tree_t *tree)
 {
-	size_t depth = 0;
+	size_t depth;
 
-	while (tree != NULL && tree->parent != NULL)
+	if (tree == NULL)
 	{
-		depth++;
-		tree = tree->parent;
+		return (0);
+	}
+	if (tree->parent == NULL)
+	{
+		return (0);
 	}
 
-	return (depth);
+	depth = binary_tree_depth(tree->parent);
+	return (depth + 1);
 }
-
-#include "binary_trees.h"
 
 /**
  * binary_tree_is_perfect - checks if binary tree is perfect
@@ -41,8 +43,8 @@ int binary_tree_is_perfect(const binary_tree_t *tree)
 	if (tree->left == NULL || tree->right == NULL)
 		return (0);
 
-	left_depth = binary_tree_depth_simple(tree->left);
-	right_depth = binary_tree_depth_simple(tree->right);
+	left_depth = binary_tree_depth(tree->left);
+	right_depth = binary_tree_depth(tree->right);
 
 	if (left_depth != right_depth)
 		return (0);
